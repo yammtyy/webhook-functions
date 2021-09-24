@@ -15,4 +15,9 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\" />
+    <Folder Include="Model\" />
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
 </Project>
