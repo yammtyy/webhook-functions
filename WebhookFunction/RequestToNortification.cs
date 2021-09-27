@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Text;
+using WebhookFunction;
 
 namespace WebhookFunction
 {
@@ -20,14 +21,24 @@ namespace WebhookFunction
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            WebRequest request = WebRequest.Create("https://notificationdemo-dev.azurewebsites.net");
+
+            string endpoint = Environment.GetEnvironmentVariable("APP_DOMAIN_NORTIFICATION_URL", EnvironmentVariableTarget.Process);
+            
+            WebRequest request = WebRequest.Create(endpoint);
             request.Method = "POST";
             request.ContentType = "application/json";
 
-            //送信するデータを書き込む
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            string data = JsonConvert.SerializeObject(requestBody);
+            dynamic data = JsonConvert.SerializeObject(requestBody);
             log.LogInformation($"{data}");
+
+            if (data == "" || null)
+            {
+                log.LogError("デ ータが正しくありません");
+                return null;
+            }
+
+            //送信するデータを書き込む
             var streamWriter = new StreamWriter(request.GetRequestStream());
             streamWriter.Write(data);
 

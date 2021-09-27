@@ -16,7 +16,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controller\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Model\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
